@@ -14,10 +14,10 @@ Stripe webhook server. Fires on `checkout.session.completed` for `prod_UHyrywGEK
 ## Required Environment Variables
 
 ```
-STRIPE_SECRET_KEY=sk_live_51T9WVeDKA1ux1Mgu...
+STRIPE_SECRET_KEY=YOUR_STRIPE_SECRET_KEY
 STRIPE_WEBHOOK_SECRET=whsec_...  (set after webhook registration)
 SMTP_USER=brandonwadepackard@gmail.com
-SMTP_PASSWORD=jrtcwraasgvqxhss
+SMTP_PASSWORD=YOUR_NEW_GMAIL_APP_PASSWORD
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 NOTIFY_EMAIL=brandonwadepackard@gmail.com
@@ -30,11 +30,13 @@ After Railway deploys:
 
 ```bash
 curl -X POST https://api.stripe.com/v1/webhook_endpoints \
-  -u sk_live_51T9WVeDKA1ux1Mgu...: \
+  -u YOUR_STRIPE_SECRET_KEY: \
   -d "url=https://YOUR-RAILWAY-DOMAIN.up.railway.app/webhook" \
   -d "enabled_events[]=checkout.session.completed" \
   -d "description=Research Pipeline Blueprint fulfillment"
 ```
+
+Store the new Gmail app password in Railway variables only; never commit it. Revoke any previously exposed app password in the Google account before relying on this deployment.
 
 Copy the `secret` field (`whsec_...`) → add to Railway env vars as `STRIPE_WEBHOOK_SECRET` → redeploy.
 
